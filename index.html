@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ブロスタ全キャラ言えるかな？</title>
+  <title>모든 브롤러를 말할 수 있을까?</title>
   <style>
    body {
   background-image: url("images/background.jpg");
@@ -186,7 +186,6 @@
   margin: 18px 0 22px;
 }
 
-/* クリアタイムを少し下へ */
 .clearTimeRow {
   margin-top: 18px;
 }
@@ -305,7 +304,6 @@
   border: 3px solid #ff69d4;
 }
 
-
 .shareXButton {
   background: #000 !important;
   color: #fff !important;
@@ -358,10 +356,6 @@
   margin: 12px 0 18px;
 }
 
-/* =========================
-   効果音 ON / OFF
-========================= */
-
 .sound-setting {
   position: absolute;
   top: 6px;
@@ -369,7 +363,7 @@
   z-index: 9999;
 
   display: flex;
-  flex-direction: column;   /* ← 縦並び */
+  flex-direction: column;
   align-items: center;
   gap: 2px;
 }
@@ -385,7 +379,7 @@
 }
 
 .sound-toggle {
-  display: flex;            /* ON/OFFだけ横並び */
+  display: flex;
 }
 
 .sound-toggle {
@@ -425,7 +419,6 @@
   background: #d91f1f;
 }
 
-/* スマホ */
 @media (max-width: 600px) {
   .sound-setting {
     position: fixed;
@@ -464,9 +457,7 @@
     line-height: 14px;
   }
 }
-/* =========================
-   スマホ版
-========================= */
+
 @media (max-width: 768px) {
 
   body {
@@ -542,7 +533,7 @@
     gap: 4px;
 
     width: auto;
-    margin: 8px 8px 0 8px;  /* ← 左右8px */
+    margin: 8px 8px 0 8px;
     padding: 0;
 
     box-sizing: border-box;
@@ -555,7 +546,6 @@
   }
 }
 
-
   .character img {
     width: 100%;
     height: 100%;
@@ -563,7 +553,6 @@
 
     object-fit: cover;
   }
-
 
   .character-name {
     display: none;
@@ -574,7 +563,6 @@
     grid-template-rows: 1fr 9px !important;
     overflow: hidden;
 }
-
 
   .number {
     position: absolute;
@@ -628,7 +616,6 @@
   }
 }
 
-/* スマホ：正解キャラ名を画像下部に重ねる */
 @media (max-width: 768px) {
 
   .character.answered {
@@ -701,7 +688,6 @@
 
 @media screen and (max-width: 600px) {
 
-  /* 10列を強制 */
   body .character-grid#characterGrid {
     display: grid !important;
     grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
@@ -713,7 +699,6 @@
     padding: 0 !important;
   }
 
-  /* 全カードを同じ縦長サイズにする */
   body .character-grid .character {
     width: 100% !important;
     height: auto !important;
@@ -727,7 +712,6 @@
     padding: 0 !important;
   }
 
-  /* 未回答の？ */
   body .character:not(.answered) img {
     width: 100% !important;
     height: 100% !important;
@@ -739,13 +723,11 @@
     padding: 0 !important;
   }
 
-  /* 正解後 */
   body .character.answered {
     display: grid !important;
     grid-template-rows: minmax(0, 1fr) 10px !important;
   }
 
-  /* 正解画像 */
   body .character.answered img {
     width: 100% !important;
     height: 100% !important;
@@ -759,7 +741,6 @@
     padding: 0 !important;
   }
 
-  /* 名前欄 */
   body .character.answered .character-name {
     display: block !important;
     position: static !important;
@@ -783,7 +764,6 @@
     box-sizing: border-box !important;
   }
 
-  /* 001などの番号 */
   body .character .number {
     position: absolute !important;
     top: 2px !important;
@@ -857,22 +837,22 @@
 
 <body>
 
- <h1 class="title">＜ブロスタ全キャラ言えるかな？＞</h1>
+ <h1 class="title">＜모든 브롤러를 말할 수 있을까?＞</h1>
 
     <div class="game-bar">
 
-  <input id="answer" placeholder="キャラ名を入力">
+  <input id="answer" placeholder="캐릭터 이름 입력">
 
-  <button onclick="checkAnswer()">回答</button>
+  <button onclick="checkAnswer()">정답</button>
 
-  <button id="giveUpButton" onclick="confirmGiveUp()">ギブアップ</button>
+  <button id="giveUpButton" onclick="confirmGiveUp()">포기</button>
 
   <div class="game-info">
     ⏱ <span id="timer">00:00</span>
   </div>
 
   <div class="game-info">
-    キャラ数：<span id="count">0</span> / 106 &nbsp;&nbsp;&nbsp;    残り：<span id="remaining">106</span>体
+    캐릭터 수: <span id="count">0</span> / 106 &nbsp;&nbsp;&nbsp; 남은 수: <span id="remaining">106</span>명
   </div>
 
   </div>
@@ -884,17 +864,17 @@
   <div id="clearCount">106 / 106</div>
 
   <div class="clearTimeRow">
-    クリアタイム：<span id="clearTime">00:00</span>
+    클리어 타임: <span id="clearTime">00:00</span>
   </div>
 
 <div class="clearComment" id="clearComment">
-  キャラ知識だけはプロランク
+  캐릭터 지식만 프로 랭크
 </div>
 
   <div class="clearButtons">
-    <button onclick="closeClear()">閉じる</button>
-    <button class="shareXButton" onclick="shareToX()">Xで共有</button>
-    <button onclick="restartGame()">もう一度</button>
+    <button onclick="closeClear()">닫기</button>
+    <button class="shareXButton" onclick="shareToX()">X에 공유</button>
+    <button onclick="restartGame()">다시 하기</button>
   </div>
 
 </div>
@@ -904,37 +884,37 @@
 
 
 <div id="giveUpMessage" style="display:none;">
-  <div id="giveUpTitle">ギブアップ</div>
+  <div id="giveUpTitle">포기</div>
 
   <div id="giveUpScore">
-    正解数：<span id="giveUpCount">0</span> / 106
+    정답 수: <span id="giveUpCount">0</span> / 106
   </div>
 
   <div>
-    タイム：<span id="giveUpTime">00:00</span>
+    시간: <span id="giveUpTime">00:00</span>
   </div>
 
   <div id="giveUpComment" class="giveUpComment">
-  次はもっといける！
+  다음엔 더 많이 맞힐 수 있어!
 </div>
 
   <div class="clearButtons">
-    <button onclick="closeGiveUp()">閉じる</button>
-   <button class="shareXButton" onclick="shareToX()">Xで共有</button>
-    <button onclick="restartGame()">もう一度</button>
+    <button onclick="closeGiveUp()">닫기</button>
+   <button class="shareXButton" onclick="shareToX()">X에 공유</button>
+    <button onclick="restartGame()">다시 하기</button>
   </div>
 </div>
 
 <div class="sound-setting">
-  <div class="sound-title">効果音</div>
+  <div class="sound-title">효과음</div>
 
   <div class="sound-toggle">
     <button type="button" id="soundOnBtn" class="sound-btn active">
-      オン
+      켜짐
     </button>
 
     <button type="button" id="soundOffBtn" class="sound-btn">
-      オフ
+      꺼짐
     </button>
   </div>
 </div>
@@ -944,8 +924,8 @@
 </div>
 
 <footer class="disclaimer">
-  ※このコンテンツは非公式であり、Supercellによる承認を受けていません。
-  ファンコンテンツに関する詳細は、Supercellのファンコンテンツポリシーをご覧ください。
+  ※ 이 콘텐츠는 비공식이며 Supercell의 승인 또는 지원을 받지 않았습니다.
+  팬 콘텐츠 관련 자세한 내용은 Supercell 팬 콘텐츠 정책을 확인해 주세요.
 </footer>
 
 <script>
@@ -971,7 +951,6 @@ for (let i = 1; i <= 106; i++) {
 } else if (i >= 105 && i <= 106) {
   character.classList.add("ultralegendary");
 }
-
 
   const number = String(i).padStart(3, "0");
 
@@ -1138,8 +1117,7 @@ const characters = {
   "시리우스": { number: 106, id: "sirius", image: "images/sirius.jpg" }
 };
 
-
-    const answered = [];
+const answered = [];
 
 function hiraganaToKatakana(str) {
   return str.replace(/[\u3041-\u3096]/g, function(match) {
@@ -1147,109 +1125,90 @@ function hiraganaToKatakana(str) {
   });
 }
 
-    function checkAnswer() {
-      const input = document.getElementById("answer");
-      const name = hiraganaToKatakana(input.value.trim());
+function checkAnswer() {
+  const input = document.getElementById("answer");
+  const name = hiraganaToKatakana(input.value.trim());
 
-   const characterEntry = Object.entries(characters).find(([key, data]) => {
-  return key === name || (data.aliases && data.aliases.includes(name));
-});
+  const characterEntry = Object.entries(characters).find(([key, data]) => {
+    return key === name || (data.aliases && data.aliases.includes(name));
+  });
 
-if (characterEntry && !answered.includes(characterEntry[0])) {
+  if (characterEntry && !answered.includes(characterEntry[0])) {
+    input.value = "";
+    answered.push(characterEntry[0]);
 
-  // 入力欄を空にする
-  input.value = "";
-
-  // 回答済みに追加
-  answered.push(characterEntry[0]);
-
-  // 1体目でタイマー開始
-  if (answered.length === 1) {
-    startTimer();
-  }
-
-  // カウント更新
-  document.getElementById("count").textContent = answered.length;
-  document.getElementById("remaining").textContent = 106 - answered.length;
-
-  // 正解音
- if (soundEnabled) {
-  new Audio("sounds/ピック音.mp3").play();
- }
-  // 正解したキャラ情報
-  const character = characterEntry[1];
-
-  // 該当する枠を取得
-  const targetBox = document.querySelector(
-    `.character[data-number="${character.number}"]`
-  );
-
-  if (targetBox) {
-
-    // 回答済み用の見た目にする
-    targetBox.classList.add("answered");
-
-    // 画像を変更
-    const targetImage = targetBox.querySelector("img");
-
-    if (targetImage) {
-      targetImage.src = character.image;
+    if (answered.length === 1) {
+      startTimer();
     }
 
-    // キャラ名を表示
-    let nameLabel = targetBox.querySelector(".character-name");
+    document.getElementById("count").textContent = answered.length;
+    document.getElementById("remaining").textContent = 106 - answered.length;
 
-    if (!nameLabel) {
-      nameLabel = document.createElement("div");
-      nameLabel.className = "character-name";
-      targetBox.appendChild(nameLabel);
+    if (soundEnabled) {
+      new Audio("sounds/ピック音.mp3").play();
     }
 
-    nameLabel.textContent = characterEntry[0];
+    const character = characterEntry[1];
+    const targetBox = document.querySelector(
+      `.character[data-number="${character.number}"]`
+    );
+
+    if (targetBox) {
+      targetBox.classList.add("answered");
+
+      const targetImage = targetBox.querySelector("img");
+
+      if (targetImage) {
+        targetImage.src = character.image;
+      }
+
+      let nameLabel = targetBox.querySelector(".character-name");
+
+      if (!nameLabel) {
+        nameLabel = document.createElement("div");
+        nameLabel.className = "character-name";
+        targetBox.appendChild(nameLabel);
+      }
+
+      nameLabel.textContent = characterEntry[0];
+    }
+
+    if (answered.length === 106) {
+      stopTimer();
+
+      document.getElementById("clearTime").textContent =
+        document.getElementById("timer").textContent;
+
+      document.getElementById("clearCount").textContent = "106 / 106 ";
+
+      const clearComments = [
+        "캐릭터 지식만 프로 랭크",
+        "한가한!",
+        "진짜 대단하다!",
+        "이 정도면 브롤스타즈 운영진 해도 되겠다",
+        "공부하러 가"
+      ];
+
+      const randomComment =
+        clearComments[Math.floor(Math.random() * clearComments.length)];
+
+      document.getElementById("clearComment").textContent = randomComment;
+
+      document.getElementById("clearMessage").style.display = "block";
+    }
+
+  } else if (characterEntry && answered.includes(characterEntry[0])) {
+    if (soundEnabled) {
+      new Audio("sounds/ミス.mp3").play();
+    }
+    input.value = "";
+
+  } else {
+    if (soundEnabled) {
+      new Audio("sounds/失敗.mp3").play();
+    }
+    input.value = "";
   }
-
-  // 106体全部回答したら終了
-if (answered.length === 106) {
-  stopTimer();
-
-  document.getElementById("clearTime").textContent =
-    document.getElementById("timer").textContent;
-
-  document.getElementById("clearCount").textContent = "106 / 106 ";
-
-const clearComments = [
-  "キャラ知識だけはプロランク",
-  "暇かよ働け",
-  "シンプルに尊敬！すごい！",
-  "おまえブロスタ運営名乗っていいよ",
-  "↑この時間あったら何できたよ？"
-];
-
-const randomComment =
-  clearComments[Math.floor(Math.random() * clearComments.length)];
-
-document.getElementById("clearComment").textContent = randomComment;
-
-  document.getElementById("clearMessage").style.display = "block";
-}
-
-} else if (characterEntry && answered.includes(characterEntry[0])) {
-
-  // すでに答えたキャラ
-  if (soundEnabled) {
-  new Audio("sounds/ミス.mp3").play();
-}
-  input.value = "";
-
-} else {
-
-  // 存在しないキャラ名
- if (soundEnabled) {
-  new Audio("sounds/失敗.mp3").play();
-}
-  input.value = "";
-}
-
 }
 
 document.getElementById("answer").addEventListener("keydown", function(event) {
@@ -1266,7 +1225,6 @@ function restartGame() {
   location.reload();
 }
 
-
 function closeClear() {
   document.getElementById("clearMessage").style.display = "none";
 }
@@ -1276,7 +1234,7 @@ function restartGame() {
 }
 
 function confirmGiveUp() {
-  const result = confirm("本当にギブアップしますか？");
+  const result = confirm("정말 포기하시겠습니까?");
 
   if (result) {
     giveUp();
@@ -1286,58 +1244,51 @@ function confirmGiveUp() {
 function giveUp() {
   stopTimer();
 
-  // 残りのキャラを全部表示
+  Object.entries(characters).forEach(([name, character]) => {
+    const targetBox = document.querySelector(
+      `.character[data-number="${character.number}"]`
+    );
 
-Object.entries(characters).forEach(([name, character]) => {
-  const targetBox = document.querySelector(
-    `.character[data-number="${character.number}"]`
-  );
+    const giveUpComments = [
+      "다음엔 더 많이 맞힐 수 있어!",
+      "맨날 포기만 하며 살 거냐",
+      "아직 멀었네",
+      "벌써 끝내는 거야? 아깝다!",
+      "여기서 포기해 버리네 ㅋ"
+    ];
 
-  const giveUpComments = [
-  "次はもっといける！",
-  "諦めてばかりの人生やな",
-  "浅いな",
-  "え！もう終わっちゃうの！勿体ね！",
-  "ここで諦めちゃうか～ｗ",
-  "ほら早く右下のボタン押せよ？ｗ"
-];
+    const randomGiveUpComment =
+      giveUpComments[Math.floor(Math.random() * giveUpComments.length)];
 
-const randomGiveUpComment =
-  giveUpComments[Math.floor(Math.random() * giveUpComments.length)];
+    document.getElementById("giveUpComment").textContent =
+      randomGiveUpComment;
 
-document.getElementById("giveUpComment").textContent =
-  randomGiveUpComment;
+    if (targetBox) {
+      const targetSlot = targetBox.querySelector("img");
 
-  if (targetBox) {
-    const targetSlot = targetBox.querySelector("img");
+      targetSlot.src = character.image;
+      targetBox.classList.add("answered");
 
-    targetSlot.src = character.image;
+      let nameLabel = targetBox.querySelector(".character-name");
 
-    // ギブアップ時も名前を表示
-    targetBox.classList.add("answered");
+      if (!nameLabel) {
+        nameLabel = document.createElement("div");
+        nameLabel.className = "character-name";
+        targetBox.appendChild(nameLabel);
+      }
 
-    let nameLabel = targetBox.querySelector(".character-name");
+      nameLabel.textContent = name;
 
-    if (!nameLabel) {
-      nameLabel = document.createElement("div");
-      nameLabel.className = "character-name";
-      targetBox.appendChild(nameLabel);
+      if (!answered.includes(name)) {
+        targetSlot.style.filter = "grayscale(100%)";
+        targetSlot.style.opacity = "0.55";
+      }
     }
+  });
 
-    nameLabel.textContent = name;
-
-    if (!answered.includes(name)) {
-      targetSlot.style.filter = "grayscale(100%)";
-      targetSlot.style.opacity = "0.55";
-    }
-  }
-});
-
-  // 回答欄とギブアップボタンを無効化
   document.getElementById("answer").disabled = true;
   document.getElementById("giveUpButton").disabled = true;
 
-  // 結果を表示
   document.getElementById("giveUpCount").textContent = answered.length;
   document.getElementById("giveUpTime").textContent =
     document.getElementById("timer").textContent;
@@ -1354,11 +1305,11 @@ function shareToX() {
   const time = document.getElementById("timer").textContent;
 
   const text =
-`ブロスタ全キャラ言えるかな？
-${count} / 106体 正解！
-タイム：${time}
+`모든 브롤러를 말할 수 있을까?
+${count} / 106명 정답!
+시간: ${time}
 
-#ブロスタ全キャラ言えるかな`;
+#모든브롤러를말할수있을까`;
 
   const url =
     "https://twitter.com/intent/tweet?text=" +
