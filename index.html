@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブロスタ全キャラ言えるかな？</title>
+  <style>
+   body {
+  background-image: url("images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+ <style>
+
+  h1 {
+    text-align: center;
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    font-weight: 900;
+  }
+
+  .status {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px;
+  }
+
+  #answer {
+    width: 300px;
+    height: 45px;
+    font-size: 20px;
+    padding: 0 12px;
+    border: 2px solid #333;
+    border-radius: 5px;
+  }
+
+  button {
+    height: 49px;
+    font-size: 18px;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(15, 65px);
+  gap: 6px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.character {
+    width: 65px;
+    height: 80px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.character img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.character.answered {
+    display: flex;
+    flex-direction: column;
+}
+
+.character.answered img {
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.character.answered .character-name {
+    display: block;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.number {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  z-index: 2;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 3px black;
+}
+
+.game-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: fit-content;
+  margin: 20px auto;
+
+  padding: 12px 16px;
+
+  background: white;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  position: relative;
+}
+
+.game-info {
+  font-size: 18px;
+  font-weight: bold;
+
+  padding: 0 10px;
+}
+
+#clearMessage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 9999;
+
+  width: 420px;
+  max-width: calc(100vw - 40px);
+
+  background: white;
+  border: 4px solid black;
+  border-radius: 20px;
+
+  padding: 28px 32px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+#clearCount {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+#clearTime {
+  color: #20c943;
+  font-size: 32px;
+  font-weight: bold;
+  display: inline-block;
+   position: relative;
+  top: -3px;
+}
+
+#clearMessage > div:nth-of-type(2) {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.clearComment {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin: 18px 0 22px;
+}
+
+/* クリアタイムを少し下へ */
+.clearTimeRow {
+  margin-top: 18px;
+}
+
+#clearMessage .clearButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.clearButtons button {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 25px;
+  border: 2px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.clearButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.clearButtons button:first-child {
+  background-color: #e53935;
+  color: white;
+}
+
+.clearButtons button:last-child {
+  background-color: #28a745;
+  color: white;
+}
+
+#giveUpButton {
+  background-color: #8b0000;
+  color: white;
+  font-weight: bold;
+  border: 2px solid #5a0000;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#giveUpButton:hover {
+  background-color: #a50000;
+}
+
+#giveUpMessage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+
+  background: white;
+  border: 5px solid black;
+  border-radius: 20px;
+
+  padding: 35px 60px;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+#giveUpTitle {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.title {
+  width: 100%;
+  text-align: center !important;
+  margin: 15px 0 20px 0;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+}
+
+.character.starter {
+  border: 3px solid #9e9e9e;
+}
+
+.character.rare {
+  border: 3px solid #32cd32;
+}
+
+.character.superrare {
+  border: 3px solid #00aaff;
+}
+
+.character.epic {
+  border: 3px solid #b84cff;
+}
+
+.character.mythic {
+  border: 3px solid #ff3b3b;
+}
+
+.character.legendary {
+  border: 3px solid #ffd700;
+}
+
+.character.ultralegendary {
+  border: 3px solid #ff69d4;
+}
+
+
+.shareXButton {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #000 !important;
+}
+
+.shareXButton:hover {
+  background: #222 !important;
+}
+
+.disclaimer {
+  margin-top: 30px;
+  padding: 15px;
+  text-align: center;
+  font-size: 12px;
+  color: #000000;
+}
+
+#clearCount {
+  font-size: 38px;
+  font-weight: bold;
+}
+
+#clearMessage {
+  font-size: 38px;
+}
+
+#clearCount {
+  margin-bottom: -18px;
+}
+
+#clearTime {
+  margin-top: -8px;
+}
+
+#clearTime {
+  color: #20b84b;
+  display: inline-block;
+  transform: translateY(5px);
+}
+
+#giveUpTitle {
+  color: #d60000;
+}
+
+.giveUpComment {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 12px 0 18px;
+}
+
+/* =========================
+   効果音 ON / OFF
+========================= */
+
+.sound-setting {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;   /* ← 縦並び */
+  align-items: center;
+  gap: 2px;
+}
+
+.sound-title {
+  font-size: 16px;
+  font-weight: 900;
+  color: #d9ff00;
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: none;
+}
+
+.sound-toggle {
+  display: flex;            /* ON/OFFだけ横並び */
+}
+
+.sound-toggle {
+  display: flex;
+}
+
+.sound-btn {
+  width: 38px;
+  height: 24px;
+
+  padding: 0;
+
+  border: 1px solid #222;
+  background: #555;
+  color: white;
+
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 24px;
+
+  cursor: pointer;
+}
+
+#soundOnBtn {
+  border-radius: 6px 0 0 6px;
+}
+
+#soundOffBtn {
+  border-radius: 0 6px 6px 0;
+}
+
+#soundOnBtn.active {
+  background: #00c91a;
+}
+
+#soundOffBtn.active {
+  background: #d91f1f;
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+  .sound-setting {
+    position: fixed;
+    right: 10px;
+    bottom: 15px;
+
+    top: auto;
+    left: auto;
+
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .sound-title {
+    font-size: 8px;
+    font-weight: 900;
+    line-height: 8px;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .sound-toggle {
+    display: flex;
+  }
+
+  .sound-btn {
+    width: 23px;
+    height: 16px;
+    padding: 0;
+    font-size: 8px;
+    font-weight: 900;
+    line-height: 14px;
+  }
+}
+/* =========================
+   スマホ版
+========================= */
+@media (max-width: 768px) {
+
+  body {
+    margin: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .title {
+    font-size: 20px !important;
+    margin: 8px 0 10px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .game-bar {
+    width: calc(100% - 12px);
+    margin: 0 auto 8px;
+    padding: 5px 6px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    border-radius: 10px;
+  }
+
+  #answer {
+    width: 34%;
+    min-width: 0;
+    height: 32px;
+    padding: 3px 6px;
+    box-sizing: border-box;
+
+    font-size: 16px;
+  }
+
+  .game-bar button {
+    height: 32px;
+    padding: 3px 7px;
+    font-size: 10px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  #giveUpButton {
+    padding: 3px 7px;
+    font-size: 10px;
+  }
+
+  .game-info {
+    margin: 0;
+    padding: 0 2px;
+    font-size: 9px;
+    white-space: nowrap;
+  }
+
+  #timer,
+  #count,
+  #remaining {
+    font-size: 9px;
+  }
+
+  @media (max-width: 600px) {
+
+ @media (max-width: 600px) {
+
+  .character-grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 4px;
+
+    width: auto;
+    margin: 8px 8px 0 8px;  /* ← 左右8px */
+    padding: 0;
+
+    box-sizing: border-box;
+  }
+
+  .character {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+  .character img {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    object-fit: cover;
+  }
+
+
+  .character-name {
+    display: none;
+  }
+
+.character.answered {
+    display: grid !important;
+    grid-template-rows: 1fr 9px !important;
+    overflow: hidden;
+}
+
+
+  .number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 5;
+
+    font-size: 7px;
+    line-height: 1;
+    text-align: left;
+
+    color: white;
+  }
+
+  #clearMessage,
+  #giveUpMessage {
+    width: calc(100% - 40px);
+    max-width: 420px;
+    box-sizing: border-box;
+    padding: 24px 18px;
+  }
+
+  #clearCount {
+    font-size: 26px;
+  }
+
+  #clearMessage,
+  #giveUpMessage {
+    font-size: 24px;
+  }
+
+  .clearComment {
+    font-size: 11px;
+  }
+
+  .clearButtons {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .clearButtons button {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+
+  .disclaimer {
+    font-size: 10px;
+    padding: 10px 16px;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+}
+
+/* スマホ：正解キャラ名を画像下部に重ねる */
+@media (max-width: 768px) {
+
+  .character.answered {
+    position: relative !important;
+    display: block !important;
+  }
+
+  .character.answered img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .character.answered .character-name {
+    display: block !important;
+    position: absolute !important;
+
+    left: 0 !important;
+    bottom: 0 !important;
+
+    width: 100% !important;
+    height: 10px !important;
+    line-height: 10px !important;
+
+    font-size: 7px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+
+    color: white !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+
+    z-index: 20 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .character.answered {
+    position: relative !important;
+    display: block !important;
+  }
+
+  .character.answered img {
+    width: 100% !important;
+    height: calc(100% - 12px) !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    display: block !important;
+  }
+
+  .character.answered .character-name {
+    position: absolute !important;
+    left: 0 !important;
+    bottom: 0 !important;
+
+    width: 100% !important;
+    height: 12px !important;
+    line-height: 12px !important;
+
+    font-size: 7px !important;
+    text-align: center !important;
+    color: white !important;
+    background: rgba(0, 0, 0, 0.85) !important;
+
+    z-index: 10 !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  /* 10列を強制 */
+  body .character-grid#characterGrid {
+    display: grid !important;
+    grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+
+    width: calc(100% - 8px) !important;
+    max-width: none !important;
+    margin: 5px auto !important;
+    padding: 0 !important;
+  }
+
+  /* 全カードを同じ縦長サイズにする */
+  body .character-grid .character {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 70 / 76 !important;
+
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 未回答の？ */
+  body .character:not(.answered) img {
+    width: 100% !important;
+    height: 100% !important;
+
+    display: block !important;
+    object-fit: fill !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 正解後 */
+  body .character.answered {
+    display: grid !important;
+    grid-template-rows: minmax(0, 1fr) 10px !important;
+  }
+
+  /* 正解画像 */
+  body .character.answered img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+
+    display: block !important;
+    object-fit: cover !important;
+
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 名前欄 */
+  body .character.answered .character-name {
+    display: block !important;
+    position: static !important;
+
+    width: 100% !important;
+    height: 10px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 10px !important;
+    font-size: 6px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+
+    color: white !important;
+    background: #000 !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 001などの番号 */
+  body .character .number {
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+
+    font-size: 7px !important;
+    line-height: 1 !important;
+    z-index: 50 !important;
+
+    color: white !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  body .character-grid#characterGrid {
+    width: 100vw !important;
+    max-width: 100vw !important;
+
+    grid-template-columns: repeat(10, calc((100vw - 27px) / 10)) !important;
+
+    gap: 3px !important;
+    padding: 0 !important;
+    margin: 5px 0 !important;
+
+    justify-content: start !important;
+    overflow: hidden !important;
+  }
+
+  body .character-grid .character {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .game-bar {
+    position: relative !important;
+    z-index: 1000 !important;
+    overflow: visible !important;
+  }
+
+  #giveUpButton {
+    position: relative !important;
+    z-index: 1001 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .game-bar {
+    position: relative !important;
+    z-index: 1000 !important;
+    overflow: visible !important;
+  }
+
+  #giveUpButton {
+    position: relative !important;
+    z-index: 1001 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+ <h1 class="title">＜ブロスタ全キャラ言えるかな？＞</h1>
+
+    <div class="game-bar">
+
+  <input id="answer" placeholder="キャラ名を入力">
+
+  <button onclick="checkAnswer()">回答</button>
+
+  <button id="giveUpButton" onclick="confirmGiveUp()">ギブアップ</button>
+
+  <div class="game-info">
+    ⏱ <span id="timer">00:00</span>
+  </div>
+
+  <div class="game-info">
+    キャラ数：<span id="count">0</span> / 106 &nbsp;&nbsp;&nbsp;    残り：<span id="remaining">106</span>体
+  </div>
+
+  </div>
+
+<div class="character-grid" id="characterGrid"></div>
+
+<div id="clearMessage" style="display:none;">
+
+  <div id="clearCount">106 / 106</div>
+
+  <div class="clearTimeRow">
+    クリアタイム：<span id="clearTime">00:00</span>
+  </div>
+
+<div class="clearComment" id="clearComment">
+  キャラ知識だけはプロランク
+</div>
+
+  <div class="clearButtons">
+    <button onclick="closeClear()">閉じる</button>
+    <button class="shareXButton" onclick="shareToX()">Xで共有</button>
+    <button onclick="restartGame()">もう一度</button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+
+<div id="giveUpMessage" style="display:none;">
+  <div id="giveUpTitle">ギブアップ</div>
+
+  <div id="giveUpScore">
+    正解数：<span id="giveUpCount">0</span> / 106
+  </div>
+
+  <div>
+    タイム：<span id="giveUpTime">00:00</span>
+  </div>
+
+  <div id="giveUpComment" class="giveUpComment">
+  次はもっといける！
+</div>
+
+  <div class="clearButtons">
+    <button onclick="closeGiveUp()">閉じる</button>
+   <button class="shareXButton" onclick="shareToX()">Xで共有</button>
+    <button onclick="restartGame()">もう一度</button>
+  </div>
+</div>
+
+<div class="sound-setting">
+  <div class="sound-title">効果音</div>
+
+  <div class="sound-toggle">
+    <button type="button" id="soundOnBtn" class="sound-btn active">
+      オン
+    </button>
+
+    <button type="button" id="soundOffBtn" class="sound-btn">
+      オフ
+    </button>
+  </div>
+</div>
+</div>
+
+
+</div>
+
+<footer class="disclaimer">
+  ※このコンテンツは非公式であり、Supercellによる承認を受けていません。
+  ファンコンテンツに関する詳細は、Supercellのファンコンテンツポリシーをご覧ください。
+</footer>
+
+<script>
+  const grid = document.querySelector(".character-grid");
+for (let i = 1; i <= 106; i++) {
+  const character = document.createElement("div");
+
+  character.className = "character";
+  character.dataset.number = i;
+
+  if (i === 1) {
+  character.classList.add("starter");
+} else if (i >= 2 && i <= 9) {
+  character.classList.add("rare");
+} else if (i >= 10 && i <= 19) {
+  character.classList.add("superrare");
+} else if (i >= 20 && i <= 49) {
+  character.classList.add("epic");
+} else if (i >= 50 && i <= 90) {
+  character.classList.add("mythic");
+} else if (i >= 91 && i <= 104) {
+  character.classList.add("legendary");
+} else if (i >= 105 && i <= 106) {
+  character.classList.add("ultralegendary");
+}
+
+
+  const number = String(i).padStart(3, "0");
+
+  character.innerHTML = `
+    <span class="number">${number}</span>
+    <img src="images/question.jpg.png">
+  `;
+
+  grid.appendChild(character);
+}
+
+</script>
+
+</div>
+
+  <p id="result"></p>
+  
+
+  <script>
+
+  let seconds = 0;
+let timerId = null;
+let timerStarted = false;
+
+function startTimer() {
+  if (timerStarted) return;
+
+  timerStarted = true;
+
+  timerId = setInterval(function () {
+    seconds++;
+
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    document.getElementById("timer").textContent =
+      String(minutes).padStart(2, "0") + ":" +
+      String(secs).padStart(2, "0");
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+}
+
+const characters = {
+  "쉘리": { number: 1, id: "shelly", image: "images/shelly.jpg" },
+  "니타": { number: 2, id: "nita", image: "images/nita.jpg" },
+  "콜트": { number: 3, id: "colt", image: "images/colt.jpg" },
+  "불": { number: 4, id: "bull", image: "images/bull.jpg" },
+  "브록": { number: 5, id: "brock", image: "images/brock.jpg" },
+
+  "엘 프리모": { number: 6, id: "elprimo", image: "images/elprimo.jpg",
+  aliases: ["엘프리모"] },
+  "발리": { number: 7, id: "barley", image: "images/barley.jpg" },
+  "포코": { number: 8, id: "poco", image: "images/poco.jpg" },
+  "로사": { number: 9, id: "rosa", image: "images/rosa.jpg" },
+
+  "제시": { number: 10, id: "jessie", image: "images/jessie.jpg" },
+  "다이너마이크": { number: 11, id: "dynamike", image: "images/dynamike.jpg" },
+  "틱": { number: 12, id: "tick", image: "images/tick.jpg" },
+  "8비트": { number: 13, id: "8bit", image: "images/8bit.jpg" ,
+  aliases: ["에이트비트"]},
+  "리코": { number: 14, id: "rico", image: "images/rico.jpg" },
+  "대릴": { number: 15, id: "darryl", image: "images/darryl.jpg" },
+  "페니": { number: 16, id: "penny", image: "images/penny.jpg" },
+  "칼": { number: 17, id: "carl", image: "images/carl.jpg" },
+  "재키": { number: 18, id: "jacky", image: "images/jacky.jpg" },
+  "거스": { number: 19, id: "gus", image: "images/gus.jpg" },
+
+  "보": { number: 20, id: "bo", image: "images/bo.jpg" },
+  "엠즈": { number: 21, id: "emz", image: "images/emz.jpg" ,
+  aliases: ["엠즈"]},
+  "스튜": { number: 22, id: "stu", image: "images/stu.jpg" },
+  "파이퍼": { number: 23, id: "piper", image: "images/piper.jpg" },
+  "팸": { number: 24, id: "pam", image: "images/pam.jpg" },
+  "프랭크": { number: 25, id: "frank", image: "images/frank.jpg" },
+  "비비": { number: 26, id: "bibi", image: "images/bibi.jpg" },
+  "비": { number: 27, id: "bea", image: "images/bea.jpg" },
+  "나니": { number: 28, id: "nani", image: "images/nani.jpg" },
+  "에드거": { number: 29, id: "edgar", image: "images/edgar.jpg" },
+  "그리프": { number: 30, id: "griff", image: "images/griff.jpg" },
+  "그롬": { number: 31, id: "grom", image: "images/grom.jpg" },
+  "보니": { number: 32, id: "bonnie", image: "images/bonnie.jpg" },
+  "게일": { number: 33, id: "gale", image: "images/gale.jpg" },
+  "콜레트": { number: 34, id: "colette", image: "images/colette.jpg" },
+  "벨": { number: 35, id: "belle", image: "images/belle.jpg" },
+  "애쉬": { number: 36, id: "ash", image: "images/ash.jpg" },
+  "롤라": { number: 37, id: "lola", image: "images/lola.jpg" },
+  "샘": { number: 38, id: "sam", image: "images/sam.jpg" },
+  "맨디": { number: 39, id: "mandy", image: "images/mandy.jpg" },
+  "메이지": { number: 40, id: "maisie", image: "images/maisie.jpg" },
+  "행크": { number: 41, id: "hank", image: "images/hank.jpg" },
+  "펄": { number: 42, id: "pearl", image: "images/pearl.jpg" },
+  "래리 & 로리": { number: 43, id: "larrylawrie", image: "images/larrylawrie.jpg",
+  aliases: ["래리 앤 로리"] },
+  "안젤로": { number: 44, id: "angelo", image: "images/angelo.jpg" },
+  "베리": { number: 45, id: "berry", image: "images/berry.jpg" },
+  "셰이드": { number: 46, id: "shade", image: "images/shade.jpg" },
+  "미플": { number: 47, id: "meeple", image: "images/meeple.jpg" },
+  "트렁크": { number: 48, id: "trunk", image: "images/trunk.jpg" },
+  "볼트": { number: 49, id: "bolt", image: "images/bolt.jpg" },
+
+  "모티스": { number: 50, id: "mortis", image: "images/mortis.jpg" },
+  "타라": { number: 51, id: "tara", image: "images/tara.jpg" },
+  "진": { number: 52, id: "gene", image: "images/gene.jpg" },
+  "맥스": { number: 53, id: "max", image: "images/max.jpg" ,aliases: ["MAX"]},
+  "미스터 P": { number: 54, id: "mrp", image: "images/mrp.jpg",
+  aliases: ["미스터피"] },
+  "스프라우트": { number: 55, id: "sprout", image: "images/sprout.jpg" },
+  "바이런": { number: 56, id: "byron", image: "images/byron.jpg" },
+  "스퀴크": { number: 57, id: "squeak", image: "images/squeak.jpg" },
+  "루": { number: 58, id: "lou", image: "images/lou.jpg" },
+  "러프스": { number: 59, id: "ruffs", image: "images/ruffs.jpg" },
+  "버즈": { number: 60, id: "buzz", image: "images/buzz.jpg" },
+  "팽": { number: 61, id: "fang", image: "images/fang.jpg" },
+  "이브": { number: 62, id: "eve", image: "images/eve.jpg" },
+  "자넷": { number: 63, id: "janet", image: "images/janet.jpg" },
+  "오티스": { number: 64, id: "otis", image: "images/otis.jpg" },
+  "버스터": { number: 65, id: "buster", image: "images/buster.jpg" },
+  "그레이": { number: 66, id: "gray", image: "images/gray.jpg" },
+  "R-T": { number: 67, id: "rt", image: "images/rt.jpg",
+  aliases: ["알티"] },
+  "윌로우": { number: 68, id: "willow", image: "images/willow.jpg" },
+  "더그": { number: 69, id: "doug", image: "images/doug.jpg" },
+  "척": { number: 70, id: "chuck", image: "images/chuck.jpg" },
+  "찰리": { number: 71, id: "charlie", image: "images/charlie.jpg" },
+  "미코": { number: 72, id: "mico", image: "images/mico.jpg" },
+  "멜로디": { number: 73, id: "melodie", image: "images/melodie.jpg" },
+  "릴리": { number: 74, id: "lily", image: "images/lily.jpg" },
+  "클랜시": { number: 75, id: "clancy", image: "images/clancy.jpg" },
+  "모": { number: 76, id: "moe", image: "images/moe.jpg" },
+  "주주": { number: 77, id: "juju", image: "images/juju.jpg" },
+  "올리": { number: 78, id: "ollie", image: "images/ollie.jpg" },
+  "루미": { number: 79, id: "lumi", image: "images/lumi.jpg" },
+  "핑크스": { number: 80, id: "finx", image: "images/finx.jpg" },
+  "재용": { number: 81, id: "jaeyong", image: "images/jaeyong.jpg" },
+  "알리": { number: 82, id: "alli", image: "images/alli.jpg" },
+  "미나": { number: 83, id: "mina", image: "images/mina.jpg" },
+  "지기": { number: 84, id: "ziggy", image: "images/ziggy.jpg" },
+  "지지": { number: 85, id: "gigi", image: "images/gigi.jpg" },
+  "나지아": { number: 86, id: "najia", image: "images/najia.jpg" },
+  "글로이": { number: 87, id: "glowy", image: "images/glowy.jpg" },
+
+  "스타 노바": { number: 88, id: "starrnova", image: "images/starrnova.jpg" },
+  "데미안": { number: 89, id: "damian", image: "images/damian.jpg" },
+  "웬디": { number: 90, id: "wendy", image: "images/wendy.jpg" },
+
+  "스파이크": { number: 91, id: "spike", image: "images/spike.jpg" },
+  "크로우": { number: 92, id: "crow", image: "images/crow.jpg" },
+  "레온": { number: 93, id: "leon", image: "images/leon.jpg" },
+  "샌디": { number: 94, id: "sandy", image: "images/sandy.jpg" },
+  "앰버": { number: 95, id: "amber", image: "images/amber.jpg" },
+  "메그": { number: 96, id: "meg", image: "images/meg.jpg" },
+  "서지": { number: 97, id: "surge", image: "images/surge.jpg" },
+  "체스터": { number: 98, id: "chester", image: "images/chester.jpg" },
+  "코델리우스": { number: 99, id: "cordelius", image: "images/cordelius.jpg" },
+  "키트": { number: 100, id: "kit", image: "images/kit.jpg" },
+  "드라코": { number: 101, id: "draco", image: "images/draco.jpg" },
+  "켄지": { number: 102, id: "kenji", image: "images/kenji.jpg" },
+  "노리": { number: 103, id: "nori", image: "images/nori.jpg" },
+  "피어스": { number: 104, id: "pierce", image: "images/pierce.jpg" },
+  "카제": { number: 105, id: "kaze", image: "images/kaze.jpg" },
+  "시리우스": { number: 106, id: "sirius", image: "images/sirius.jpg" }
+};
+
+
+    const answered = [];
+
+function hiraganaToKatakana(str) {
+  return str.replace(/[\u3041-\u3096]/g, function(match) {
+    return String.fromCharCode(match.charCodeAt(0) + 0x60);
+  });
+}
+
+    function checkAnswer() {
+      const input = document.getElementById("answer");
+      const name = hiraganaToKatakana(input.value.trim());
+
+   const characterEntry = Object.entries(characters).find(([key, data]) => {
+  return key === name || (data.aliases && data.aliases.includes(name));
+});
+
+if (characterEntry && !answered.includes(characterEntry[0])) {
+
+  // 入力欄を空にする
+  input.value = "";
+
+  // 回答済みに追加
+  answered.push(characterEntry[0]);
+
+  // 1体目でタイマー開始
+  if (answered.length === 1) {
+    startTimer();
+  }
+
+  // カウント更新
+  document.getElementById("count").textContent = answered.length;
+  document.getElementById("remaining").textContent = 106 - answered.length;
+
+  // 正解音
+ if (soundEnabled) {
+  new Audio("sounds/ピック音.mp3").play();
+ }
+  // 正解したキャラ情報
+  const character = characterEntry[1];
+
+  // 該当する枠を取得
+  const targetBox = document.querySelector(
+    `.character[data-number="${character.number}"]`
+  );
+
+  if (targetBox) {
+
+    // 回答済み用の見た目にする
+    targetBox.classList.add("answered");
+
+    // 画像を変更
+    const targetImage = targetBox.querySelector("img");
+
+    if (targetImage) {
+      targetImage.src = character.image;
+    }
+
+    // キャラ名を表示
+    let nameLabel = targetBox.querySelector(".character-name");
+
+    if (!nameLabel) {
+      nameLabel = document.createElement("div");
+      nameLabel.className = "character-name";
+      targetBox.appendChild(nameLabel);
+    }
+
+    nameLabel.textContent = characterEntry[0];
+  }
+
+  // 106体全部回答したら終了
+if (answered.length === 106) {
+  stopTimer();
+
+  document.getElementById("clearTime").textContent =
+    document.getElementById("timer").textContent;
+
+  document.getElementById("clearCount").textContent = "106 / 106 ";
+
+const clearComments = [
+  "キャラ知識だけはプロランク",
+  "暇かよ働け",
+  "シンプルに尊敬！すごい！",
+  "おまえブロスタ運営名乗っていいよ",
+  "↑この時間あったら何できたよ？"
+];
+
+const randomComment =
+  clearComments[Math.floor(Math.random() * clearComments.length)];
+
+document.getElementById("clearComment").textContent = randomComment;
+
+  document.getElementById("clearMessage").style.display = "block";
+}
+
+} else if (characterEntry && answered.includes(characterEntry[0])) {
+
+  // すでに答えたキャラ
+  if (soundEnabled) {
+  new Audio("sounds/ミス.mp3").play();
+}
+  input.value = "";
+
+} else {
+
+  // 存在しないキャラ名
+ if (soundEnabled) {
+  new Audio("sounds/失敗.mp3").play();
+}
+  input.value = "";
+}
+
+}
+
+document.getElementById("answer").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    checkAnswer();
+  }
+});
+
+function closeClear() {
+  document.getElementById("clearMessage").style.display = "none";
+}
+
+function restartGame() {
+  location.reload();
+}
+
+
+function closeClear() {
+  document.getElementById("clearMessage").style.display = "none";
+}
+
+function restartGame() {
+  location.reload();
+}
+
+function confirmGiveUp() {
+  const result = confirm("本当にギブアップしますか？");
+
+  if (result) {
+    giveUp();
+  }
+}
+
+function giveUp() {
+  stopTimer();
+
+  // 残りのキャラを全部表示
+
+Object.entries(characters).forEach(([name, character]) => {
+  const targetBox = document.querySelector(
+    `.character[data-number="${character.number}"]`
+  );
+
+  const giveUpComments = [
+  "次はもっといける！",
+  "諦めてばかりの人生やな",
+  "浅いな",
+  "え！もう終わっちゃうの！勿体ね！",
+  "ここで諦めちゃうか～ｗ",
+  "ほら早く右下のボタン押せよ？ｗ"
+];
+
+const randomGiveUpComment =
+  giveUpComments[Math.floor(Math.random() * giveUpComments.length)];
+
+document.getElementById("giveUpComment").textContent =
+  randomGiveUpComment;
+
+  if (targetBox) {
+    const targetSlot = targetBox.querySelector("img");
+
+    targetSlot.src = character.image;
+
+    // ギブアップ時も名前を表示
+    targetBox.classList.add("answered");
+
+    let nameLabel = targetBox.querySelector(".character-name");
+
+    if (!nameLabel) {
+      nameLabel = document.createElement("div");
+      nameLabel.className = "character-name";
+      targetBox.appendChild(nameLabel);
+    }
+
+    nameLabel.textContent = name;
+
+    if (!answered.includes(name)) {
+      targetSlot.style.filter = "grayscale(100%)";
+      targetSlot.style.opacity = "0.55";
+    }
+  }
+});
+
+  // 回答欄とギブアップボタンを無効化
+  document.getElementById("answer").disabled = true;
+  document.getElementById("giveUpButton").disabled = true;
+
+  // 結果を表示
+  document.getElementById("giveUpCount").textContent = answered.length;
+  document.getElementById("giveUpTime").textContent =
+    document.getElementById("timer").textContent;
+
+  document.getElementById("giveUpMessage").style.display = "block";
+}
+
+function closeGiveUp() {
+  document.getElementById("giveUpMessage").style.display = "none";
+}
+
+function shareToX() {
+  const count = answered.length;
+  const time = document.getElementById("timer").textContent;
+
+  const text =
+`ブロスタ全キャラ言えるかな？
+${count} / 106体 正解！
+タイム：${time}
+
+#ブロスタ全キャラ言えるかな`;
+
+  const url =
+    "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent(text);
+
+  window.open(url, "_blank");
+}
+
+let soundEnabled = true;
+
+const soundOnBtn = document.getElementById("soundOnBtn");
+const soundOffBtn = document.getElementById("soundOffBtn");
+
+function updateSoundButtons() {
+  soundOnBtn.classList.toggle("active", soundEnabled);
+  soundOffBtn.classList.toggle("active", !soundEnabled);
+}
+
+soundOnBtn.addEventListener("click", function () {
+  soundEnabled = true;
+  updateSoundButtons();
+});
+
+soundOffBtn.addEventListener("click", function () {
+  soundEnabled = false;
+  updateSoundButtons();
+});
+
+updateSoundButtons();
+
+  </script>
+
+</body>
+</html>
