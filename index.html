@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모든 브롤러를 말할 수 있을까?</title>
+  <title>모든 브롤러 이름 말하다!</title>
   <style>
    body {
   background-image: url("images/background.jpg");
@@ -838,7 +838,7 @@
 
 <body>
 
- <h1 class="title">＜모든 브롤러를 말할 수 있을까?＞</h1>
+ <h1 class="title">＜모든 브롤러 이름 말하다!＞</h1>
 
     <div class="game-bar">
 
@@ -1014,7 +1014,7 @@ const characters = {
   "다이너마이크": { number: 11, id: "dynamike", image: "images/dynamike.jpg" },
   "틱": { number: 12, id: "tick", image: "images/tick.jpg" },
   "8비트": { number: 13, id: "8bit", image: "images/8bit.jpg" ,
-  aliases: ["에이트비트"]},
+  aliases: ["팔비트"]},
   "리코": { number: 14, id: "rico", image: "images/rico.jpg" },
   "대릴": { number: 15, id: "darryl", image: "images/darryl.jpg" },
   "페니": { number: 16, id: "penny", image: "images/penny.jpg" },
@@ -1024,7 +1024,7 @@ const characters = {
 
   "보": { number: 20, id: "bo", image: "images/bo.jpg" },
   "엠즈": { number: 21, id: "emz", image: "images/emz.jpg" ,
-  aliases: ["엠즈"]},
+  aliases: ["EMZ"]},
   "스튜": { number: 22, id: "stu", image: "images/stu.jpg" },
   "파이퍼": { number: 23, id: "piper", image: "images/piper.jpg" },
   "팸": { number: 24, id: "pam", image: "images/pam.jpg" },
@@ -1047,7 +1047,7 @@ const characters = {
   "행크": { number: 41, id: "hank", image: "images/hank.jpg" },
   "펄": { number: 42, id: "pearl", image: "images/pearl.jpg" },
   "래리 & 로리": { number: 43, id: "larrylawrie", image: "images/larrylawrie.jpg",
-  aliases: ["래리 앤 로리"] },
+  aliases: ["래리&로리"] },
   "안젤로": { number: 44, id: "angelo", image: "images/angelo.jpg" },
   "베리": { number: 45, id: "berry", image: "images/berry.jpg" },
   "셰이드": { number: 46, id: "shade", image: "images/shade.jpg" },
@@ -1060,7 +1060,7 @@ const characters = {
   "진": { number: 52, id: "gene", image: "images/gene.jpg" },
   "맥스": { number: 53, id: "max", image: "images/max.jpg" ,aliases: ["MAX"]},
   "미스터 P": { number: 54, id: "mrp", image: "images/mrp.jpg",
-  aliases: ["미스터피"] },
+  aliases: ["미스터P"] },
   "스프라우트": { number: 55, id: "sprout", image: "images/sprout.jpg" },
   "바이런": { number: 56, id: "byron", image: "images/byron.jpg" },
   "스퀴크": { number: 57, id: "squeak", image: "images/squeak.jpg" },
@@ -1094,9 +1094,9 @@ const characters = {
   "지기": { number: 84, id: "ziggy", image: "images/ziggy.jpg" },
   "지지": { number: 85, id: "gigi", image: "images/gigi.jpg" },
   "나지아": { number: 86, id: "najia", image: "images/najia.jpg" },
-  "글로이": { number: 87, id: "glowy", image: "images/glowy.jpg" },
+  "글로이": { number: 87, id: "glowy", image: "images/glowy.jpg", aliases: ["글로우버트"] },
 
-  "스타 노바": { number: 88, id: "starrnova", image: "images/starrnova.jpg" },
+  "스타 노바": { number: 88, id: "starrnova", image: "images/starrnova.jpg", aliases:["스타노바"] },
   "데미안": { number: 89, id: "damian", image: "images/damian.jpg" },
   "웬디": { number: 90, id: "wendy", image: "images/wendy.jpg" },
 
@@ -1306,11 +1306,11 @@ function shareToX() {
   const time = document.getElementById("timer").textContent;
 
   const text =
-`모든 브롤러를 말할 수 있을까?
+`모든 브롤러 이름 말한!
 ${count} / 106명 정답!
 시간: ${time}
 
-#모든브롤러를말할수있을까`;
+#모든브롤러이름말하다`;
 
   const url =
     "https://twitter.com/intent/tweet?text=" +
